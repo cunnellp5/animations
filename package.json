@@ -11,5 +11,9 @@
     "url": "animations"
   },
   "author": "cunnellp5",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "lodash": "^4.17.21"
+  }
 }
