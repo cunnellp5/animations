@@ -3,19 +3,30 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
+    width: 300px;
+    height: 300px;
 }
 
 #help-text {
-    border: 5px solid black;
+    display: flex;
+    justify-content: center;
+    background-color: #90EE90;
+    border-radius: 8%;
     position: absolute;
-    top: 0%;
+    top: 50%;
     left: 50%;
-    padding-left: 24px;
-    width: 576px;
+    padding: 8px;
+    width: 300px;
+    /* letter-spacing: 20px; */
     transform: translate(-50%);
+    font-family: Bangers; 
+    font-size: 32px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 700; 
+    line-height: 24px;
 }
+
 
 #controls {
     display: flex;
