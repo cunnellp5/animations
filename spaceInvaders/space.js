@@ -132,7 +132,39 @@ class Enemy {
         this.radius = 40;
         this.width = this.radius * 2;
         this.height = this.radius * 2;
+        this.speedX = 1;
+        this.speedY = 1;
+        this.free = true;
     }
+
+    start () {
+        this.free = false;
+        this.x = Math.random() * this.game.width;
+        this.y = Math.random() * this.game.height;
+        const aim = this.game.calcAim(this, this.game.planet);
+        this.speedX = aim[0];
+        this.speedY = aim[1];
+    }
+
+    reset () {
+        this.free = true;
+    }
+
+    draw (context) {
+        if (!this.free) {
+            context.beginPath();
+            context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            context.stroke();
+        }
+    }
+
+    update () {
+        if (!this.free) {
+            this.x += this.speedX;
+            this.y += this.speedY;
+        }
+    }
+
 }
 
 class Game {
@@ -144,9 +176,18 @@ class Game {
         this.player = new Player(this);
         this.debug = false;
 
+        // projectile pool
         this.projectilePool = [];
-        this.numberOfProjectiles = 30;
+        this.numberOfProjectiles = 20;
         this.createProjectilePool();
+
+        // enemy pool
+        this.enemyPool = [];
+        this.numberOfEnemies = 20;
+        this.createEnemyPool();
+        this.enemyPool[0].start();
+        this.enemyPool[1].start();
+        this.enemyPool[2].start();
 
         this.mouse = {
             x: 0,
@@ -174,11 +215,18 @@ class Game {
     
     render (context) {
         this.planet.draw(context);
+
         this.player.draw(context);
         this.player.update();
+
         this.projectilePool.forEach(projectile => {
             projectile.draw(context);
             projectile.update();
+        })
+
+        this.enemyPool.forEach(enemy => {
+            enemy.draw(context);
+            enemy.update();
         })
     }
 
@@ -203,10 +251,22 @@ class Game {
             if (this.projectilePool[i].free) {
                 return this.projectilePool[i];
             }
-            
         }
     }
 
+    createEnemyPool () {
+        for (let i = 0; i < this.numberOfEnemies; i++) {
+            this.enemyPool.push(new Enemy(this));
+        }
+    }
+
+    getEnemy () {
+        for (let i = 0; i < this.enemyPool.length; i++) {
+            if (this.enemyPool[i].free) {
+                return this.enemyPool[i];
+            }
+        }
+    }
 }
 
 window.addEventListener('load', function () {
