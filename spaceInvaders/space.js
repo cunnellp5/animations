@@ -95,7 +95,7 @@ class Projectile {
 
     draw (context) {
         if(this.isPeen) {
-            context.drawImage(document.getElementById('penis'), this.x - this.radius, this.y - this.radius);
+            context.drawImage(document.getElementById('penis'), this.x, this.y);
         }
         else {
             if(!this.free) {
@@ -272,8 +272,8 @@ class Game {
 window.addEventListener('load', function () {
     const canvas = document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
-    canvas.width = 800;
-    canvas.height = 800;
+    canvas.width = 1000;
+    canvas.height = 1000;
     ctx.strokeStyle = 'white';
     ctx.lineWidth = 2;
 
