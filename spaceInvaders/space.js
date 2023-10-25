@@ -51,27 +51,42 @@ class Player {
     shoot () {
         const projectile = this.game.getProjectile();
 
-        if (projectile) projectile.start(100, 100);
-
-        console.log(projectile)
+        if (projectile) {
+            projectile.start(
+                this.x + this.radius * this.aim[0],
+                this.y + this.radius * this.aim[1],
+                this.aim[0],
+                this.aim[1]
+            );
+        };
     }
 }
 
-class Porjectile {
+class Projectile {
     constructor (game) {
         this.game = game;
         this.x;
         this.y;
-        this.radius = 20;
+        this.radius = 5;
         this.speedX = 1;
         this.speedY = 1;
+        this.speedModifier = 2;
         this.free = true;
+        this.isPeen = false;
+
+        window.addEventListener('keyup', e => {
+            if(e.key === 'p') {
+                this.isPeen = !this.isPeen;
+            }
+        })
     }
 
-    start (x, y) {
+    start (x, y, speedX, speedY) {
         this.free = false;
         this.x = x;
         this.y = y;
+        this.speedX = speedX * this.speedModifier;
+        this.speedY = speedY * this.speedModifier;
     }
 
     reset () {
@@ -79,18 +94,44 @@ class Porjectile {
     }
 
     draw (context) {
-        if(!this.free) {
-            context.beginPath();
-            context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            context.fill();
+        if(this.isPeen) {
+            context.drawImage(document.getElementById('penis'), this.x - this.radius, this.y - this.radius);
+        }
+        else {
+            if(!this.free) {
+                context.save();
+                context.beginPath();
+                context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                context.fillStyle = 'gold';
+                context.fill();
+                context.restore();
+            }
         }
     }
 
     update () {
-        if(!this.free) {
+        if (!this.free) {
             this.x += this.speedX;
             this.y += this.speedY;
         }
+
+        if (this.x < 0 
+            || this.x > this.game.width 
+            || this.y < 0 
+            || this.y > this.game.height) {
+            this.reset();
+        }
+    }
+}
+
+class Enemy {
+    constructor (game) {
+        this.game = game;
+        this.x = 100;
+        this.y = 100;
+        this.radius = 40;
+        this.width = this.radius * 2;
+        this.height = this.radius * 2;
     }
 }
 
@@ -104,7 +145,7 @@ class Game {
         this.debug = false;
 
         this.projectilePool = [];
-        this.numberOfProjectiles = 5;
+        this.numberOfProjectiles = 30;
         this.createProjectilePool();
 
         this.mouse = {
@@ -125,9 +166,10 @@ class Game {
         window.addEventListener('keyup', e => {
             if(e.key === 'd') {
                 this.debug = !this.debug;
+            } else if (e.key === '1') {
+                this.player.shoot();
             }
         })
-
     }
     
     render (context) {
@@ -152,13 +194,13 @@ class Game {
 
     createProjectilePool () {
         for (let i = 0; i < this.numberOfProjectiles; i++) {
-            this.projectilePool.push(new Porjectile(this));
+            this.projectilePool.push(new Projectile(this));
         }
     }
 
     getProjectile () {
         for (let i = 0; i < this.projectilePool.length; i++) {
-            if(this.projectilePool[i].free) {
+            if (this.projectilePool[i].free) {
                 return this.projectilePool[i];
             }
             
