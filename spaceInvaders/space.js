@@ -73,29 +73,49 @@ class Projectile {
         this.speedModifier = 2;
         this.free = true;
         this.isPeen = false;
+        this.angle = 0;
+        this.angleModifier = (45 * Math.PI / 180);
+        this.debug = false;
 
         window.addEventListener('keyup', e => {
             if(e.key === 'p') {
                 this.isPeen = !this.isPeen;
             }
         })
+        window.addEventListener('keyup', e => {
+            if(e.key === 'd') {
+                this.debug = !this.debug;
+            }
+        })
     }
 
-    start (x, y, speedX, speedY) {
+    start (x, y, speedX, speedY, angle) {
         this.free = false;
         this.x = x;
         this.y = y;
         this.speedX = speedX * this.speedModifier;
         this.speedY = speedY * this.speedModifier;
+        this.angle = angle;
     }
+
 
     reset () {
         this.free = true;
     }
 
     draw (context) {
-        if(this.isPeen) {
-            context.drawImage(document.getElementById('penis'), this.x, this.y);
+        if(this.isPeen) {            
+            context.save();
+            context.translate(this.x, this.y)
+            context.rotate((Math.atan2(this.speedY, this.speedX)) + this.angleModifier);
+            context.drawImage(document.getElementById('penis'), -this.radius*5, -this.radius*5);
+            context.restore();
+
+            if (this.debug) {
+                context.beginPath();
+                context.arc(this.x, this.y, this.radius * 5, 0, Math.PI * 2);
+                context.stroke();
+            }
         }
         else {
             if(!this.free) {
