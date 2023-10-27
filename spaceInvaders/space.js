@@ -159,8 +159,17 @@ class Enemy {
 
     start () {
         this.free = false;
-        this.x = Math.random() * this.game.width;
-        this.y = Math.random() * this.game.height;
+        if (Math.random() < 0.5) {
+            this.x = Math.random() * this.game.width;
+            this.y = Math.random() < 0.5 
+                ? -this.radius
+                : this.game.height - this.radius;
+        } else {
+            this.x = Math.random() < 0.5 
+                ? -this.radius
+                : this.game.width - this.radius;
+            this.y = Math.random() * this.game.height;
+        }
         // calc aim afterr position of enemies
         const aim = this.game.calcAim(this, this.game.planet);
         this.speedX = aim[0];
@@ -184,13 +193,25 @@ class Enemy {
             this.x += this.speedX;
             this.y += this.speedY;
 
+            // collision enemy/planet
             if (this.game.checkCollision(this, this.game.planet)) {
                 this.reset();
             }
 
+            // collision enemy/player
             if (this.game.checkCollision(this, this.game.player)) {
                 this.reset();
             }
+
+            // check enemy/projectiole
+            this.game.projectilePool.forEach((projectile) => {
+                if (!projectile.free) {
+                    if (this.game.checkCollision(this, projectile)) {
+                        projectile.reset();
+                        this.reset();
+                    }
+                }
+            })
         }
     }
 
@@ -215,8 +236,8 @@ class Game {
         this.numberOfEnemies = 20;
         this.createEnemyPool();
         this.enemyPool[0].start();
-        this.enemyPool[1].start();
-        this.enemyPool[2].start();
+        this.enemyTimer = 0;
+        this.enemyInterval = 500;
 
         this.mouse = {
             x: 0,
@@ -242,7 +263,7 @@ class Game {
         })
     }
     
-    render (context) {
+    render (context, deltaTime) {
         this.planet.draw(context);
 
         this.player.draw(context);
@@ -257,6 +278,17 @@ class Game {
             enemy.draw(context);
             enemy.update();
         })
+
+        // periodically activate an enemy
+        if (this.enemyTimer < this.enemyInterval) {
+            this.enemyTimer += deltaTime;
+        } else {
+            this.enemyTimer = 0;
+            const enemy = this.getEnemy();
+            if (enemy) {
+                enemy.start();
+            }
+        }
     }
 
     calcAim (a, b) {
@@ -316,10 +348,15 @@ window.addEventListener('load', function () {
 
     const game = new Game(canvas);
 
-    function animate() {
+    let lastTime = 0;
+
+    function animate (timeStamp) {
+        const deltaTime = timeStamp - lastTime;
+        lastTime = timeStamp;
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-        game.render(ctx);
+        game.render(ctx, deltaTime);
         requestAnimationFrame(animate)
     }
+
     requestAnimationFrame(animate)
 })
