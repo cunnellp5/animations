@@ -259,17 +259,13 @@ class Enemy {
 
             if (this.frameX > this.maxFrame) {
                 this.reset();
-                if (!this.collided) {
+                if (!this.collided && !this.game.gameOver) {
                     this.game.score += this.maxLives;
                 }
             }
-
-            // screen animation
-            // stretch goal here
         }
     }
 }
-
 
 class Asteroid extends Enemy {
     constructor (game) {
@@ -283,7 +279,6 @@ class Asteroid extends Enemy {
     }
 }
 
-
 class LobsterMorph extends Enemy {
     constructor (game) {
         super(game);
@@ -292,6 +287,30 @@ class LobsterMorph extends Enemy {
         this.frameY = Math.floor(Math.random() * 4);
         this.maxFrame = 14;
         this.lives = 8;
+        this.maxLives = this.lives;
+    }
+}
+
+class BeetleMorph extends Enemy {
+    constructor (game) {
+        super(game);
+        this.image = document.getElementById('beetleMorph');
+        this.frameX = 0;
+        this.frameY = Math.floor(Math.random() * 4);
+        this.maxFrame = 3;
+        this.lives = 1;
+        this.maxLives = this.lives;
+    }
+}
+
+class RhinoMorph extends Enemy {
+    constructor (game) {
+        super(game);
+        this.image = document.getElementById('rhinoMorph');
+        this.frameX = 0;
+        this.frameY = Math.floor(Math.random() * 4);
+        this.maxFrame = 6;
+        this.lives = 4;
         this.maxLives = this.lives;
     }
 }
@@ -317,7 +336,7 @@ class Game {
         this.createEnemyPool();
         this.enemyPool[0].start();
         this.enemyTimer = 0;
-        this.enemyInterval = 1000;
+        this.enemyInterval = 1200;
 
         // sprite sheet
         this.spriteUpdate = false;
@@ -327,7 +346,7 @@ class Game {
         // game
         this.score = 0;
         this.winningScore = 100;
-        this.lives = 5;
+        this.lives = 10;
 
         this.mouse = {
             x: 0,
@@ -470,8 +489,12 @@ class Game {
             let randomNumber = Math.random();
 
             // in 25% of cases create asteroid
-            if (randomNumber > 0.25) {
+            if (randomNumber < 0.25) {
                 this.enemyPool.push(new Asteroid(this));
+            } else if (randomNumber < 0.5) {
+                this.enemyPool.push(new BeetleMorph(this));
+            } else if (randomNumber < 0.75) {
+                this.enemyPool.push(new RhinoMorph(this));
             } else {
                 this.enemyPool.push(new LobsterMorph(this));
             }
@@ -525,3 +548,12 @@ window.addEventListener('load', function () {
 // - optimize peen rotation. probably dont need to recalc
 // - sprite animate the planet as lives are lost
 // - sprite animate the space ship as lives are lost
+
+// update score when enemy dies, not after full animation
+
+// implement enemies from the other space invaders game
+
+// - power up ideas
+//     - stronger weapons
+//     - modifiers like shields
+//     - star powers
