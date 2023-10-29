@@ -5,15 +5,24 @@ class Planet {
         this.y = this.game.height * 0.5;
         this.radius = 80;
         this.image = document.getElementById('planet');
+        this.angle = 0;
     }
 
     draw (context) {
-        context.drawImage(this.image, this.x - 100, this.y - 100)
+        context.save();
+        context.translate(this.x, this.y)
+        context.rotate(this.angle);
+        context.drawImage(this.image, -100, -100)
+        context.restore();
         if(this.game.debug) {
             context.beginPath();
             context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
             context.stroke();
         }
+    }
+
+    update () {
+        this.angle = this.angle + 0.0008;
     }
 }
 
@@ -374,6 +383,7 @@ class Game {
     
     render (context, deltaTime) {
         this.planet.draw(context);
+        this.planet.update();
 
         this.drawStatusText(context);
 
@@ -536,24 +546,3 @@ window.addEventListener('load', function () {
 
     requestAnimationFrame(animate)
 })
-
-
-// Stretch goals:
-// - optimize game loops and renders such that some of them dont continuously runInContext
-// - add a health bar above enemies
-// - refactor classes into separate files
-// - give planet lives
-// - give player lives
-// - add flash animation on collision
-// - optimize peen rotation. probably dont need to recalc
-// - sprite animate the planet as lives are lost
-// - sprite animate the space ship as lives are lost
-
-// update score when enemy dies, not after full animation
-
-// implement enemies from the other space invaders game
-
-// - power up ideas
-//     - stronger weapons
-//     - modifiers like shields
-//     - star powers
