@@ -237,6 +237,7 @@ class Enemy {
 
             // check collision enemy/planet
             if (this.game.checkCollision(this, this.game.planet) && this.lives >= 1) {
+                flashRed();
                 this.lives = 0;
                 this.speedX = 0;
                 this.speedY = 0;
@@ -246,6 +247,7 @@ class Enemy {
             
             // check collision enemy/player
             if (this.game.checkCollision(this, this.game.player) && this.lives >= 1) {
+                flashRed();
                 this.lives = 0;
                 this.collided = true;
                 this.game.lives--;
@@ -546,3 +548,17 @@ window.addEventListener('load', function () {
 
     requestAnimationFrame(animate)
 })
+
+function flashRed() {
+    document.body.classList.add('red')
+    window.setTimeout(function() {
+        document.body.classList.remove('red')
+    }, 100)
+}
+
+function flashGreen() {
+    document.body.classList.add('green')
+    window.setTimeout(function() {
+        document.body.classList.remove('green')
+    }, 100)
+}

@@ -1,3 +1,20 @@
+@keyframes redflash {
+    to {
+      background-color: #FFCDD2;
+    }
+  }
+@keyframes greenflash {
+    to {
+      background-color: #C8E6C9;
+    }
+}
+.red {
+    animation: redflash 0.16s 2 alternate ease-out;
+}
+.green {
+    animation: greenflash 0.16s 2 alternate ease-out;
+}
+
 #canvas1 {
     border: 3px solid black;
     background: url('./media/randm.jpeg') center/190% ;
@@ -23,3 +40,4 @@
 .hidden {
     display: none;
 }
+
