@@ -30,7 +30,7 @@ body {
 }
 
 footer {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   margin: 4rem auto;
   text-decoration: none;
   color: rgb(22, 22, 121);
@@ -67,7 +67,7 @@ a:hover::before {
   position: relative;
   width: 90%;
   max-width: 800px;
-  min-width: 400px;
+  min-width: 300px;
   height: 480px;
   margin: 8rem auto;
   background: #fafafa;
@@ -114,4 +114,11 @@ a:hover::before {
   font-size: 18px;
   box-sizing: border-box;
   z-index: 1;
+}
+
+#paper-airplane {
+  position: absolute;
+  opacity: 0.6;
+  top: 300px;
+  right: 100px;
 }
