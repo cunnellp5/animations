@@ -1,0 +1,97 @@
+html {
+  --s: 194px; /* control the size */
+  --c1: #f6edb3;
+  --c2: #acc4a3;
+
+  --_l: #0000 calc(25% / 3), var(--c1) 0 25%, #0000 0;
+  --_g: conic-gradient(from 120deg at 50% 87.5%, var(--c1) 120deg, #0000 0);
+  background: var(--_g), var(--_g) 0 calc(var(--s) / 2),
+    conic-gradient(from 180deg at 75%, var(--c2) 60deg, #0000 0),
+    conic-gradient(from 60deg at 75% 75%, var(--c1) 0 60deg, #0000 0),
+    linear-gradient(150deg, var(--_l)) 0 calc(var(--s) / 2),
+    conic-gradient(
+      at 25% 25%,
+      #0000 50%,
+      var(--c2) 0 240deg,
+      var(--c1) 0 300deg,
+      var(--c2) 0
+    ),
+    linear-gradient(-150deg, var(--_l)) #55897c /* third color here */;
+  background-size: calc(0.866 * var(--s)) var(--s);
+}
+
+a {
+  text-decoration: none;
+  color: rgb(22, 22, 121);
+}
+
+a:hover {
+  display: inline-block;
+  transform: scale(1.1);
+  text-decoration: line-through;
+}
+a:hover::after {
+  content: " 👈"; /* Add your emoji here */
+  display: inline-block;
+}
+a:hover::before {
+  content: "👉 "; /* Add your emoji here */
+  display: inline-block;
+}
+
+.paper-title {
+  font-family: "Handlee", monospace;
+  font-size: 2rem;
+}
+.paper {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  min-width: 400px;
+  height: 480px;
+  margin: 8rem auto;
+  background: #fafafa;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+.paper:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  background: radial-gradient(#575450 6px, transparent 7px) repeat-y;
+  background-size: 30px 30px;
+  border-right: 3px solid #d44147;
+  box-sizing: border-box;
+}
+
+.paper-content {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  bottom: 30px;
+  left: 60px;
+  background: linear-gradient(transparent, transparent 28px, #91d1d3 28px);
+  background-size: 30px 30px;
+}
+
+.paper-content .textarea {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  line-height: 30px;
+  padding: 0 10px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: rgb(22, 22, 121);
+  font-family: "Handlee", monospace;
+  font-weight: bold;
+  font-size: 18px;
+  box-sizing: border-box;
+  z-index: 1;
+}
