@@ -18,6 +18,26 @@ html {
     ),
     linear-gradient(-150deg, var(--_l)) #55897c /* third color here */;
   background-size: calc(0.866 * var(--s)) var(--s);
+  height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+footer {
+  font-size: 1.5rem;
+  margin: 4rem auto;
+  text-decoration: none;
+  color: rgb(22, 22, 121);
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 2px;
+  border-radius: 5px;
+  font-family: "Ubuntu", monospace;
 }
 
 a {
