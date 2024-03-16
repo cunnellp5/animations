@@ -11,16 +11,25 @@
 👾 <a href="animations.philcunnell.dev/spaceInvaders/space.html">Space Invaders game</a> (desktop only)<br>
 🌭 <a href="animations.philcunnell.dev/sprites/sprite.html">Sprites Hot dog</a><br>
 
+---
+
 ### Tech Stack
 
 - JavaScript
 - HTML
 - CSS
 - GLSL (shader code saved here but not rendered)
+- Three.js imported as CDN
 
-### Dev Start up
+### Development
 
-- $ git clone {project}
-- $ npm install
-- $ http-server
+- No need to actually run `npm install`.
+- I prefer using the `http-server` package to serve these static pages
+
+  ```
+  $ git clone {project}
+  $ npm install (optional)
+  $ http-server (optional)
+  ```
+
 - open html any of the html files in your browser to view results
