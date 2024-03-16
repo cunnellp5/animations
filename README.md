@@ -4,10 +4,16 @@
 
 ### Description
 
-- Repo consisting of multiple tutorials around animations purley for fun
+- Repo consisting of multiple tutorials around animations purley fun
 
+### Tech Stack
 
-### Getting started
+- JavaScript
+- HTML
+- CSS
+
+### Dev Start up
+
 - $ git clone {project}
 - $ npm install
 - $ http-server

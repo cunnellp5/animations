@@ -1,5 +1,7 @@
 # Shadertoy!
 
+> None of this is rendering, yet
+
 space to house all shadertoy code
 
 https://www.shadertoy.com/new#
