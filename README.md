@@ -1,5 +1,7 @@
 # Animations
 
+[animations.philcunnell.dev](https://animations.philcunnell.dev)
+
 > [!WARNING]
 > Some content may be offensive
 
