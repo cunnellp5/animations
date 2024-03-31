@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  style="
+    height: 100vh;
+    width: 100vw;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+      sans-serif;
+  "
+>
+  <head>
+    <style>
+      .hover-link {
+        transition: color 0.3s ease;
+      }
+      .hover-link:hover {
+        color: pink !important;
+      }
+
+      /* Signature Rainbow Bar */
+      .rainbow {
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 100vw;
+      }
+
+      .rainbow-progress {
+        animation: moveGradient 8s linear infinite;
+        background: linear-gradient(
+          90deg,
+          red 0%,
+          yellow 15%,
+          lime 30%,
+          cyan 50%,
+          blue 65%,
+          magenta 80%,
+          red 100%
+        );
+        background-size: 200%;
+        border-radius: 3px;
+        height: 1.5px;
+        width: 100%;
+      }
+
+      /* Animations */
+      @keyframes moveGradient {
+        0% {
+          background-position: 0%;
+        }
+        100% {
+          background-position: 200%;
+        }
+      }
+    </style>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Philip Cunnell</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgb(24, 24, 24);
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    "
+  >
+    <div class="rainbow">
+      <div class="rainbow-progress"></div>
+    </div>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 55px;
+        color: white;
+      "
+    >
+      <h3 style="font-weight: 900; margin-block: 1.5rem">404</h3>
+      <div
+        style="
+          margin-inline: 1rem;
+          border-left: 1px solid rgb(207, 207, 207);
+          height: 40px;
+        "
+      ></div>
+      <small style="font-weight: 800; font-size: 20px">Shoot.</small>
+    </div>
+    <a
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        color: coral;
+        letter-spacing: 0.4rem;
+      "
+      class="hover-link"
+      href="https://philcunnell.dev/"
+      >[philcunnell.dev]</a
+    >
+  </body>
+</html>
