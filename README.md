@@ -13,6 +13,7 @@
 👾 <a href="animations.philcunnell.dev/spaceInvaders/space.html">Space Invaders game</a> (desktop only)<br>
 🌭 <a href="animations.philcunnell.dev/sprites/sprite.html">Sprites Hot dog</a><br>
 👹 <a href="animations.philcunnell.dev/monsterCSS/index.html">Monster CSS</a><br>
+🐣 <a href="animations.philcunnell.dev/nonFlappyBird/index.html">Non-flappy Bird</a><br>
 
 ---
 
