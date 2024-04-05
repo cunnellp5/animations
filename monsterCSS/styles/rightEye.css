@@ -1,0 +1,181 @@
+
+.eyeBoarderRight{
+  position: absolute;
+  left: 20.25em;
+  height: 2.5em;
+  width: 2.5em;
+  border-radius: 50%;
+  border: 3px solid #22eafe;
+  animation: blinkr 1.8s infinite alternate;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.whiteCircleRight{
+  height: 4em;
+  width: 4em;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wrapIt{
+  position: absolute;
+  top: 15.3em;
+  animation: flyer1 3s infinite alternate;
+}
+.wrinkleRight{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wrinkleRight2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.irisRight{
+  height: 1.5em;
+  width: 1.5em;
+  border-radius: 50%;
+  background-color: #43D5FD;
+  background: linear-gradient(to top, #43D5FD, #AF39CD);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 20px 20px white;
+  border: .35em solid white;
+  animation: move 9s 4.2s infinite alternate;
+  animation: red 10s 5s infinite;
+
+}
+.pupilRight{
+  height: .7em;
+  width: .7em;
+  border-radius: 50%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: dialate 10s infinite alternate;
+}
+.whiteCircleBigRight{
+  height: 1.1em;
+  width: 1.1em;
+  border-radius: 50%;
+  background-color: white;
+  margin-left: -1.5em;
+  margin-top: -1.3em;
+  opacity: .4;
+}
+.whiteCircleSmallRight{
+  height: .51em;
+  width: .51em;
+  border-radius: 50%;
+  background-color: white;
+  animation: shift 5s 2.2s infinite alternate;
+  opacity: .2;
+}
+.rightBody{
+  position: absolute;
+  left: 19.3em;
+  top: 13.2em;
+  height: 4.55em;
+  width: 4.55em;
+  border-radius: 50%;
+  background-color: #22eafe;
+  box-shadow: 0 0 100px 0px #22eafe;
+  animation: flyer 3s infinite alternate;
+}
+.rightGuy{
+  position: absolute;
+  left: 13.75em;
+  top: 5em;
+  z-index: -1;
+  transform: rotate(-90deg);
+  animation: flyer2 3s infinite alternate;
+}
+.rightHornsGuy{
+  position: absolute;
+  z-index: -2;
+  top: 5em;
+  left: 13.7em;
+  transform: rotate(-90deg);
+  animation: flyer2 3s infinite alternate;
+}
+.rightArmsGuy{
+  position: absolute;
+  z-index: -3;
+  top: 15em;
+  left: 10.6em;
+  transform: rotate(90deg);
+  animation: flyer3 3s infinite alternate;
+}
+
+@keyframes flyer3 {
+  40%{
+    top: 16.4em;
+  }
+}
+@keyframes flyer {
+  40%{
+    top: 15em;
+  }
+}
+
+@keyframes flyer1 {
+  40%{
+    top: 17.1em;
+  }
+}
+@keyframes flyer2 {
+  40%{
+    top: 6.8em;
+  }
+}
+@keyframes blinkr {
+  50% {
+    height: 0em;
+    border-top: 10px solid #22eafe;
+    border-bottom: 10px solid #22eafe;
+  }
+}
+@keyframes shift {
+  50% {
+    /*margin: 1em;*/
+    margin-left: .5em;
+    opacity: 0;
+  }
+}
+@keyframes move {
+  20% {
+
+  }
+  50% {
+    margin-left: .5em;
+  }
+  70% {
+    margin-top: .5em;
+  }
+}
+
+@keyframes dialate {
+  20% {
+    height: 1em;
+    width: 1em;
+  }
+  50% {
+    height: .41em;
+    width: .41em;
+  }
+}
+
+@keyframes red {
+  50% {
+  box-shadow: 0px 0px 20px 20px pink;
+    border: .35em solid pink;
+  }
+}
+/*#AF39CD - purple*/
+/*#43D5FD - baby blue*/

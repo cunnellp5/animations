@@ -1,0 +1,23 @@
+
+.pixiBodyLeft{
+  height: 20%;
+  width: 9%;
+  background-color: #A100FD;
+  left: 15em;
+}
+.pixiRight{
+  background-color: #2FE9FF;
+  height: 15%;
+  width: 10%;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+/*
+margin: 0 auto;
+position: fixed;
+top: 25em;
+height: 85em;
+width: 60em;
+background-color: #FE0037;
+border-radius: 50%;
+z-index: -100;*/
