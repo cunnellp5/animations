@@ -48,15 +48,6 @@ a {
 a:hover {
   display: inline-block;
   transform: scale(1.1);
-  text-decoration: line-through;
-}
-a:hover::after {
-  content: " 👈"; /* Add your emoji here */
-  display: inline-block;
-}
-a:hover::before {
-  content: "👉 "; /* Add your emoji here */
-  display: inline-block;
 }
 
 .paper-title {
@@ -64,7 +55,7 @@ a:hover::before {
   font-size: 2rem;
 }
 .paper {
-  position: relative;
+  position: absolute;
   width: 90%;
   max-width: 800px;
   min-width: 300px;
