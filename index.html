@@ -6,15 +6,15 @@
     <title>phil cunnell - Animations</title>
     <link rel="stylesheet" type="text/css" href="./main.css"></link>
     <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>"
+    rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>"
     />
   </head>
   <body>
     <main class="paper">
       <div class="paper-content">
-          <div class="textarea">
-            <div class="paper-title">ANIMATIONS&#10;</div>
+        <div class="textarea">
+            <div class="paper-title">ANIMATIONS&#10; with <span id="typewriter"></span><span class="cursor">|</span></div>
             <br>
             <a href="./flowField/flow.html">Flow Field</a>
             <br>
@@ -36,5 +36,47 @@
     <footer>
       <a href="https://philcunnell.dev">philcunnell.dev</a>
     </footer>
+
+        <script>
+        const words = ["JavaScript.", "ThreeJS.", "CSS.", "sprites."];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const target = document.getElementById("typewriter");
+
+        function type() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                // Remove a character
+                target.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                // Add a character
+                target.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            // Default typing speed
+            let typeSpeed = isDeleting ? 50 : 150;
+
+            // If word is completely typed
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 1500; // Pause at the end of the word
+                isDeleting = true;
+            } 
+            // If word is completely deleted
+            else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length; // Move to next word
+                typeSpeed = 500; // Pause before typing next word
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        // Initialize on load
+        document.addEventListener("DOMContentLoaded", () => setTimeout(type, 500));
+    </script>
   </body>
 </html>
