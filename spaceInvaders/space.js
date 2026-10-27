@@ -5,15 +5,24 @@ class Planet {
     this.y = this.game.height * 0.5;
     this.radius = 80;
     this.image = document.getElementById("planet");
+    this.destroyedImage = document.getElementById("destroyedPlanet");
     this.angle = 0;
   }
 
   draw(context) {
+    const image = this.game.lives < 1 ? this.destroyedImage : this.image;
+
     context.save();
     context.translate(this.x, this.y);
-    context.rotate(this.angle);
-    context?.drawImage(this.image, -100, -100);
+
+    if (this.game.lives >= 1) {
+      context.rotate(this.angle);
+    }
+    // context.rotate(this.angle);
+
+    context?.drawImage(image, -100, -100);
     context.restore();
+
     if (this.game.debug) {
       context.beginPath();
       context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
@@ -62,6 +71,10 @@ class Player {
   }
 
   shoot() {
+    if (!this.game.started || this.game.gameOver || !this.aim) {
+      return;
+    }
+
     const projectile = this.game.getProjectile();
 
     if (projectile) {
@@ -85,15 +98,8 @@ class Projectile {
     this.speedY = 1;
     this.speedModifier = 5;
     this.free = true;
-    this.isPeen = false;
     this.angle = 0;
     this.angleModifier = (45 * Math.PI) / 180;
-
-    window.addEventListener("keyup", (e) => {
-      if (e.key === "p") {
-        this.isPeen = !this.isPeen;
-      }
-    });
   }
 
   start(x, y, speedX, speedY, angle) {
@@ -110,31 +116,13 @@ class Projectile {
   }
 
   draw(context) {
-    if (this.isPeen) {
+    if (!this.free) {
       context.save();
-      context.translate(this.x, this.y);
-      context.rotate(Math.atan2(this.speedY, this.speedX) + this.angleModifier);
-      context?.drawImage(
-        document.getElementById("penis"),
-        -this.radius * 5,
-        -this.radius * 5
-      );
+      context.beginPath();
+      context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      context.fillStyle = "gold";
+      context.fill();
       context.restore();
-
-      if (this.game.debug) {
-        context.beginPath();
-        context.arc(this.x, this.y, this.radius * 5, 0, Math.PI * 2);
-        context.stroke();
-      }
-    } else {
-      if (!this.free) {
-        context.save();
-        context.beginPath();
-        context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        context.fillStyle = "gold";
-        context.fill();
-        context.restore();
-      }
     }
   }
 
@@ -365,6 +353,9 @@ class Game {
       y: 0,
     };
 
+    // start screen
+    this.started = false;
+
     // event listeners
     window.addEventListener("mousemove", (e) => {
       this.mouse.x = e.offsetX;
@@ -382,9 +373,20 @@ class Game {
         this.player.shoot();
       }
     });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && (!this.started || this.gameOver)) {
+        this.startGame();
+      }
+    });
   }
 
   render(context, deltaTime) {
+    if(!this.started) {
+      this.drawStartScreen(context);
+      return;
+    }
+
     this.planet.draw(context);
     this.planet.update();
 
@@ -429,6 +431,22 @@ class Game {
     if (this.score >= this.winningScore || this.lives < 1) {
       this.gameOver = true;
     }
+
+    if (this.gameOver) {
+      this.drawStatusText(context);
+      return;
+    }
+  }
+
+  drawStartScreen(context) {
+    context.save();
+    context.textAlign = "center";
+    context.fillStyle = "white";
+    context.font = "64px Impact";
+    context.fillText("Planet Defence", this.width / 2, this.height / 2 - 40);
+    context.font = "28px Impact";
+    context.fillText("Press Enter to start", this.width / 2, this.height / 2 + 30);
+    context.restore();
   }
 
   drawStatusText(context) {
@@ -451,10 +469,10 @@ class Game {
 
       if (this.score >= this.winningScore) {
         title = "You win!";
-        subTitle = `Your score is ${this.score}!`;
+        subTitle = `Your score is ${this.score}! Press enter to play again`;
       } else {
-        title = "You lose!";
-        subTitle = `Try again, bitch!`;
+        title = "Planet destroyed";
+        subTitle = 'Press enter to try again';
       }
 
       context.font = "100px Impact";
@@ -469,6 +487,11 @@ class Game {
     const dx = a.x - b.x;
     const dy = a.y - b.y;
     const distance = Math.hypot(dx, dy);
+
+    if (distance === 0) {
+      return [0, -1, 0, -1];
+    }
+
     const aimX = (dx / distance) * -1;
     const aimY = (dy / distance) * -1;
 
@@ -476,11 +499,16 @@ class Game {
   }
 
   checkCollision(a, b) {
-    const dx = a.x - b.x;
-    const dy = a.y - b.y;
-    const distance = Math.hypot(dx, dy);
-    const sumOfRadii = a.radius + b.radius;
-    return distance < sumOfRadii;
+    // const dx = a.x - b.x;
+    // const dy = a.y - b.y;
+    // const distance = Math.hypot(dx, dy);
+    // const sumOfRadii = a.radius + b.radius;
+    // return distance < sumOfRadii;
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      const radiusSum = a.radius + b.radius;
+
+      return dx * dx + dy * dy < radiusSum * radiusSum;
   }
 
   createProjectilePool() {
@@ -521,6 +549,20 @@ class Game {
       }
     }
   }
+
+  startGame() {
+    this.started = true;
+    this.gameOver = false;
+    this.score = 0;
+    this.lives = 10;
+    this.enemyTimer = 0;
+    this.spriteTimer = 0;
+    this.spriteUpdate = false;
+
+    this.projectilePool.forEach((projectile) => projectile.reset());
+    this.enemyPool.forEach((enemy) => enemy.reset());
+    this.enemyPool[0].start();
+  }
 }
 
 window.addEventListener("load", function () {
@@ -554,12 +596,12 @@ function flashRed() {
   document.body.classList.add("red");
   window.setTimeout(function () {
     document.body.classList.remove("red");
-  }, 100);
+  }, 250);
 }
 
 function flashGreen() {
   document.body.classList.add("green");
   window.setTimeout(function () {
     document.body.classList.remove("green");
-  }, 100);
+  }, 250);
 }
